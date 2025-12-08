@@ -24,12 +24,12 @@ The purpose of this database is to support business operations by allowing owner
 
 The relational model will include, at minimum, the following entities:
 
+* **Suppliers**
 * **Products**
 * **Categories**
 * **Customers**
 * **Orders**
 * **Order Items**
-* **Suppliers**
 
 These entities are linked through primary and foreign key relationships, enabling consistent and reliable data queries.
 
@@ -44,6 +44,8 @@ The database is conceptually based on the following relationships:
 * Suppliers can provide multiple products
 
 ![Entity-Relationship Diagram for Tierra de Osos Data Base](./diagram.png)
+
+> [Link to Entity-Relationship Table in Excel](./table.xlsx)
 
 ## 🧱 Data Base Schema (DDL)
 
@@ -112,3 +114,15 @@ INSERT INTO customers(name,email) VALUES
 ('Ana Lopez', 'ana@gmail.com'),
 ('Juan Perez', 'juan@gmail.com');
 ```
+
+## 👤 Author
+
+Designed and developed by **Tomás Mársico**
+
+If you have questions, feel free to reach out or open an issue in the repository.
+
+## 🌟 Final Notes
+
+This database was created as a practical learning project to understand relational model design, SQL DDL/DML usage, and management of business information using a structured data model.
+
+Thank you for checking out this project! 😊
