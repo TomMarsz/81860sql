@@ -1,0 +1,37 @@
+
+Listado de Vistas más una descripción detallada, su objetivo, y qué tablas las componen.
+
+Listado de Funciones que incluyan una descripción detallada, el objetivo para la cual fueron creadas y qué datos o tablas manipulan y/o son implementadas.
+
+Listado de Stored Procedures con una descripción detallada, qué objetivo o beneficio aportan al proyecto, y las tablas que lo componen y/o tablas con las que interactúa.
+
+Un archivo .sql que contenga:
+
+Script de inserción de datos en las bases.
+
+Si se insertan datos mediante importación, agregar el paso a paso de éste en el DOC PDF más los archivos con el contenido a importar, en el formato que corresponda.
+
+Script de creación de Vistas, Funciones, Stored Procedures y Triggers.
+
+
+Funcional
+Presenta la documentación en formato PDF solicitada, la cual amplía el contenido presentado originalmente en la entrega parcial 1.
+
+Junto al contenido original, se adiciona el listado de Vistas creadas a partir de las tablas de su proyecto, su descripción, objetivos de uso, y qué tablas componen dichas Vistas.
+
+También se detalla el listado de Funciones personalizadas, su descripción, objetivos de uso, y qué tablas las conforman o qué función aplican sobre la información.
+
+Se incluye el listado de Stored Procedures creados, con su descripción, los objetivos de uso, y qué tablas lo componen o sobre cuáles tablas impacta el uso de éstos.
+
+Se detalla el listado de Triggers creados, una descripción de su funcionalidad, objetivos y/o sobre qué tablas y/o situaciones se accionan.
+
+Todas las secciones agregadas son concisas y no tienen párrafos de relleno.
+
+El resto de la información anterior, se mantiene fiel respecto a su primera presentación parcial, o se incluyeron mejoras o detalle de tablas adicionales que se crearon a partir de nuevos conocimientos adquiridos. <--------------->
+
+Técnico
+Se incluyen dos archivos de script del tipo archivo .SQL, cuyos nombres referencian qué funciones cumplen.
+
+Se ejecuta el script inicial de creación de Vistas, Stored Procedures, Triggers y Funciones Personalizadas sin presentar problemas al ejecutarse. El script genera correctamente los objetos de bb.dd. descritos en el documento presentado.
+
+Se ejecuta el segundo script, el cual genera registros en las tablas de datos para luego poder ejecutar Stored Procedures, Funciones personalizadas, Vistas y/o disparar Triggers y llegar a resultados óptimos a partir de los registros generados.
