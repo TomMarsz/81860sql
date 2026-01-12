@@ -43,9 +43,28 @@ The database is conceptually based on the following relationships:
 * Products are associated with one supplier
 * Suppliers can provide multiple products
 
-![Entity-Relationship Diagram for Tierra de Osos Data Base](./diagram.png)
+![Entity-Relationship Diagram for Tierra de Osos Data Base](./public/diagram.png)
 
-> [Link to Entity-Relationship Table in Excel](./table.xlsx)
+> [Link to Entity-Relationship Table in Excel](./public/table.xlsx)
+
+## SQL Directory
+
+This repository includes SQL files and supporting artifacts used to create, populate and inspect the Tierra de Osos database. Use this section as a quick guide to what you will find and how to run the files.
+
+What to expect
+
+* Schema/DDL file — SQL script that create the database schema (tables, constraints, indexes). Typical names: `schema.sql`, `ddl.sql`.
+* Data/DML file — SQL script that insert sample data (seed data). Typical names: `data.sql`, `seed.sql`.
+* Views file - SQL script 
+* Functions file - SQL script 
+* Stored Procedures file - SQL script 
+
+Recommended execution order
+
+1. Create the target database (and user) in your RDBMS.
+2. Run the schema (DDL) script(s) to create tables and constraints.
+3. Run the data (DML) script(s) to insert sample data.
+4. Run any migration or convenience scripts last.
 
 ## 🧱 Data Base Schema (DDL)
 
