@@ -1,3 +1,7 @@
+-- ============================================
+-- VIEWS
+-- ============================================
+
 -- Vista para mostrar los pedidos de los clientes con detalles de productos
 CREATE VIEW vw_customer_orders AS
 SELECT 
@@ -190,3 +194,97 @@ JOIN
     order_items oi ON o.order_id = oi.order_id
 JOIN
     products p ON oi.product_id = p.product_id;
+
+-- Vista para mostrar el desempeño de ventas por empleado
+CREATE VIEW vw_employee_sales_performance AS
+SELECT 
+    e.employee_id,
+    CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
+    o.name AS office_name,
+    COUNT(ord.order_id) AS total_orders_handled,
+    SUM(ord.total_amount) AS total_revenue_generated
+FROM 
+    employees e
+JOIN 
+    offices o ON e.office_id = o.office_id
+LEFT JOIN 
+    orders ord ON e.employee_id = ord.employee_id
+GROUP BY 
+    e.employee_id;
+
+-- Vista para mostrar el resumen de calificaciones de productos
+CREATE VIEW vw_product_rating_summary AS
+SELECT 
+    p.product_id,
+    p.name AS product_name,
+    AVG(pr.rating) AS average_rating,
+    COUNT(pr.review_id) AS total_reviews
+FROM 
+    products p
+LEFT JOIN 
+    product_reviews pr ON p.product_id = pr.product_id
+GROUP BY 
+    p.product_id;
+
+-- Vista para mostrar los productos más agregados a listas de deseos
+CREATE VIEW vw_most_wishlisted_products AS
+SELECT 
+    p.name AS product_name,
+    COUNT(w.wishlist_id) AS times_added_to_wishlist
+FROM 
+    products p
+JOIN 
+    wishlist w ON p.product_id = w.product_id
+GROUP BY 
+    p.product_id
+ORDER BY 
+    times_added_to_wishlist DESC;
+
+-- ============================================
+-- EXAMPLES
+-- ============================================
+
+-- Vista para mostrar los pedidos de los clientes con detalles de productos
+SELECT * FROM vw_customer_orders WHERE customer_id = 1;
+
+-- Vista para mostrar el inventario de productos con sus categorías y proveedores
+SELECT * FROM vw_product_inventory WHERE stock < 20;
+
+-- Vista para mostrar proveedores con sus productos
+SELECT * FROM vw_supplier_products WHERE supplier_id = 2;
+
+-- Vista para mostrar categorías con sus productos
+SELECT * FROM vw_category_products WHERE category_id = 3;
+
+-- Vista for mostrar resumen de pedidos con total calculado
+SELECT * FROM vw_order_summary WHERE order_id = 1;
+
+-- Vista para mostrar productos con bajo stock
+SELECT * FROM vw_low_stock_products;
+
+-- Vista para mostrar cantidad de pedidos realizados por cliente
+SELECT * FROM vw_customer_order_counts ORDER BY total_orders DESC;
+
+-- Vista para mostrar cantidad de productos por proveedor
+SELECT * FROM vw_supplier_product_counts ORDER BY total_products DESC;
+
+-- Vista para mostrar cantidad de productos por categoría
+SELECT * FROM vw_category_product_counts ORDER BY total_products DESC;
+
+-- Vista para mostrar ventas mensuales
+SELECT * FROM vw_monthly_sales ORDER BY order_month DESC;
+
+-- Vista para mostrar productos más vendidos
+SELECT * FROM vw_top_selling_products;
+
+-- Vista para mostrar detalles completos de los ítems de los pedidos
+SELECT * FROM vw_detailed_order_items WHERE order_id = 1;
+
+-- Vista para mostrar el desempeño de ventas por empleado
+SELECT * FROM vw_employee_sales_performance ORDER BY total_revenue_generated DESC;
+
+-- Vista para mostrar el resumen de calificaciones de productos
+SELECT * FROM vw_product_rating_summary WHERE average_rating >= 4.0;
+
+-- Vista para mostrar los productos más agregados a listas de deseos
+SELECT * FROM vw_most_wishlisted_products LIMIT 10;

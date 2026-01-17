@@ -1,280 +1,104 @@
-# 81860sql
+# Proyecto Final SQL: Sistema de Gestión "Tierra de Osos"
 
-## 📌 Overview
+## 📑 Índice
 
-This project contains the development of a **relational database** designed for **Tierra de Osos**, a stuffed-toy retail business.
+1. [📌 1. Introducción](#-1-introducción)
+2. [🎯 2. Objetivo](#-2-objetivo)
+3. [🚨 3. Situación Problemática](#-3-situación-problemática)
+4. [💼 4. Modelo de Negocio](#-4-modelo-de-negocio)
+5. [📐 5. Diagrama Entidad-Relación](#-5-diagrama-entidad-relación-e-r)
+6. [🧱 6. Listado de Tablas y Estructura](#-6-listado-de-tablas-y-estructura)
+7. [📂 7. Scripts de Objetos de la DB](#-7-scripts-de-objetos-de-la-db)
+8. [📊 8. Informe Analítico](#-8-informe-analítico)
+9. [🧰 9. Herramientas Utilizadas](#-9-herramientas-utilizadas)
+10. [👤 10. Autor](#-10-autor)
+11. [🌟 11. Notas finales](#-11-notas-finales)
 
-The purpose of this database is to support business operations by allowing owners and administrators to:
+## 📌 1. Introducción
 
-* Track product inventory.
-* Manage customer orders.
-* Maintain supplier information.
-* Store relevant client data.
+Este proyecto consiste en el diseño y despliegue de una base de datos relacional para **"Tierra de Osos"**, una empresa líder en la comercialización de peluches. El sistema está diseñado para gestionar de manera integral el inventario, la fuerza de ventas, el comportamiento de los clientes y la logística de distribución, asegurando la integridad de los datos en cada transacción.
 
-## 📂 Features
+## 🎯 2. Objetivo
 
-* Inventory management
-* Order tracking
-* Customer records
-* Supplier management
-* Product categorization
-* Stock control
+El objetivo principal es transformar la operativa manual de la empresa en un ecosistema digital eficiente. El proyecto busca cubrir tres aristas fundamentales:
 
-## 🧱 Database Structure
+* **Logística:** Control automatizado de stock y alertas de reabastecimiento.
+* **Contable/Ventas:** Registro preciso de facturación, métodos de pago y gestión de devoluciones.
+* **Analítica:** Generación de informes estratégicos sobre tendencias de consumo y desempeño de empleados.
 
-The relational model will include, at minimum, the following entities:
+## 🚨 3. Situación Problemática
 
-* **Suppliers**
-* **Products**
-* **Categories**
-* **Customers**
-* **Orders**
-* **Order Items**
+Antes de la implementación, "Tierra de Osos" enfrentaba:
 
-These entities are linked through primary and foreign key relationships, enabling consistent and reliable data queries.
+* **Falta de trazabilidad:** No se sabía con certeza qué empleado realizaba cada venta.
+* **Inconsistencia de inventario:** Quiebres de stock frecuentes por falta de alertas.
+* **Información fragmentada:** Los datos de devoluciones y deseos de clientes (wishlist) se llevaban en archivos aislados, impidiendo campañas de marketing efectivas.
 
-## 📐 Entity-Relationship Diagram (ERD)
+## 💼 4. Modelo de Negocio
 
-The database is conceptually based on the following relationships:
+La organización opera bajo un modelo **B2C e híbrido**, con ventas presenciales en múltiples sucursales y un catálogo digital. La estructura se centra en la relación entre el stock (productos/categorías) y la demanda (clientes/órdenes), mediada por un equipo de empleados y procesos de auditoría para garantizar la seguridad de la información.
 
-* A customer can place multiple orders
-* Each order may contain multiple products
-* Products are linked to categories
-* Products are associated with one supplier
-* Suppliers can provide multiple products
+## 📐 5. Diagrama Entidad-Relación (E-R)
 
-![Entity-Relationship Diagram for Tierra de Osos Data Base](./public/diagram.png)
+El modelo cuenta con **15 entidades** interconectadas. La tabla de hechos principal es `order_items`, que vincula las dimensiones de tiempo (orders), personas (customers, employees) y productos.
 
-> [Link to Entity-Relationship Table in Excel](./public/table.xlsx)
+![Diagrama Entidad-Relación para la Base de Datos de Tierra de Osos](./public/diagram.png)
 
-## SQL Directory
+## 🧱 6. Listado de Tablas y Estructura
 
-This repository includes SQL files and supporting artifacts used to create, populate and inspect the Tierra de Osos database. Use this section as a quick guide to what you will find and how to run the files.
+| Tabla | Descripción | Columnas Clave | Tipo de Clave |
+| :--- | :--- | :--- | :--- |
+| **customers** | Datos maestros de clientes. | `customer_id` | PK |
+| **suppliers** | Proveedores de suministros. | `supplier_id` | PK |
+| **categories** | Clasificación de peluches. | `category_id` | PK |
+| **products** | Catálogo y stock. | `product_id`, `category_id`, `supplier_id` | PK, FK, FK |
+| **orders** | Cabecera de pedidos. | `order_id`, `customer_id`, `employee_id` | PK, FK, FK |
+| **order_items** | Detalle transaccional (Hechos). | `id`, `order_id`, `product_id` | PK, FK, FK |
+| **offices** | Sucursales físicas. | `office_id` | PK |
+| **employees** | Staff de ventas y gestión. | `employee_id`, `office_id` | PK, FK |
+| **payment_methods** | Opciones de pago. | `payment_id` | PK |
+| **shipping_methods** | Logística de entrega. | `shipping_id` | PK |
+| **discounts** | Cupones y promociones. | `discount_id` | PK |
+| **product_reviews** | Feedback de clientes. | `review_id`, `product_id`, `customer_id` | PK, FK, FK |
+| **wishlist** | Productos deseados. | `wishlist_id`, `customer_id`, `product_id` | PK, FK, FK |
+| **returns** | Gestión de devoluciones. | `return_id`, `order_id` | PK, FK |
+| **audit_logs** | Trazabilidad de cambios. | `log_id` | PK |
 
-What to expect
+> [Tabla E-R en formato Excel](./public/table.xlsx)
 
-* Schema/DDL file — SQL script that create the database schema (tables, constraints, indexes). Typical names: `schema.sql`, `ddl.sql`.
-* Data/DML file — SQL script that insert sample data (seed data). Typical names: `data.sql`, `seed.sql`.
-* Views file - SQL script 
-* Functions file - SQL script 
-* Stored Procedures file - SQL script 
+## 📂 7. Scripts de Objetos de la DB
 
-Recommended execution order
+Se han desarrollado objetos avanzados para automatizar la lógica de negocio:
 
-1. Create the target database (and user) in your RDBMS.
-2. Run the schema (DDL) script(s) to create tables and constraints.
-3. Run the data (DML) script(s) to insert sample data.
-4. Run any migration or convenience scripts last.
+* **Vistas (5+):** Incluyendo `vw_monthly_sales` y `vw_employee_sales_performance` para reportes rápidos.
+* **Stored Procedures (2+):** Destacando `sp_process_return` (automatiza la devolución de stock) y `sp_create_order`.
+* **Funciones (2+):** Como `fn_calculate_order_total` y `fn_apply_discount`.
+* **Triggers (2+):** Stock management en `trg_before_order_item_update`, Actualización de precio en pedidos en `trg_after_order_item_insert` y auditoría automática de eliminaciones en `audit_logs`.
 
-## 🧱 Data Base Schema (DDL)
+## 📊 8. Informe Analítico
 
-```sql
-CREATE TABLE customers (
-    customer_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE,
-    phone VARCHAR(50),
-    address TEXT
-);
+Mediante el análisis de las vistas generadas, se determinó que:
 
-CREATE TABLE suppliers (
-    supplier_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    phone VARCHAR(50),
-    email VARCHAR(100) UNIQUE
-);
+1. **Ventas:** La sucursal "Abasto" lidera en ticket promedio, mientras que "Casa Central" lidera en volumen.
+2. **Marketing:** Existe un 15% de productos en `wishlist` que podrían convertirse con el cupón `CYBERPELUCHE`.
+3. **Calidad:** La tabla `returns` muestra una tasa de devolución del 2% vinculada a un proveedor específico, permitiendo tomar decisiones de compra más inteligentes.
 
-CREATE TABLE categories (
-    category_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL
-);
+> [Informe Analítico Completo en Word](./public/informe-analitico.docx)
 
-CREATE TABLE products (
-    product_id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    category_id INT NOT NULL,
-    supplier_id INT NOT NULL,
-    price DECIMAL(10,2) NOT NULL CHECK (price >= 0),
-    stock INT DEFAULT 0 CHECK (stock >= 0),
-    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE RESTRICT,
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(supplier_id) ON DELETE RESTRICT
-);
+## 🧰 9. Herramientas Utilizadas
 
-CREATE TABLE orders (
-    order_id INT AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT NOT NULL,
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    total_amount DECIMAL(10,2),
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
-);
+* **MySQL Workbench:** Diseño y administración de BB.DD.
+* **Microsoft Excel:** Para la analítica de datos.
+* **VS Code:** Edición de scripts SQL.
 
-CREATE TABLE order_items (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
-    product_id INT NOT NULL,
-    quantity INT NOT NULL CHECK (quantity > 0),
-    unit_price DECIMAL(10,2) NOT NULL CHECK (unit_price >= 0),
-    FOREIGN KEY (order_id) REFERENCES orders(order_id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE RESTRICT
-);
-```
+## 👤 10. Autor
 
-## 📦 Sample Data (DML)
+Este proyecto fue diseñado y desarrollado por **Tomás Mársico**
 
-```sql
--- ============================================
--- PROVEEDORES
--- ============================================
-INSERT INTO suppliers(name, phone, email) VALUES
-('Fábrica de Osos', '+54-11-4567-8901', 'ventas@fabricadeosos.com'),
-('Peluches Internacionales', '+54-11-4567-8902', 'contacto@peluchesinternacionales.com'),
-('Peluches Premium SA', '+54-11-4567-8903', 'info@peluchespremium.com.ar'),
-('Suministros Globales de Felpa', '+1-555-0199', 'pedidos@suministrosglobales.com'),
-('Osos y Más', '+54-11-4567-8905', 'ventas@ososymas.com.ar');
+Si tiene preguntas, no dude en comunicarse o abrir un problema en el repositorio.
 
--- ============================================
--- CATEGORÍAS
--- ============================================
-INSERT INTO categories(name) VALUES
-('Osos Clásicos'),
-('Animales Salvajes'),
-('Criaturas Fantásticas'),
-('Colección Bebé'),
-('Temporada y Festivos'),
-('Peluches Gigantes');
+## 🌟 11. Notas finales
 
--- ============================================
--- PRODUCTOS
--- ============================================
-INSERT INTO products(name, category_id, supplier_id, price, stock) VALUES
--- Osos Clásicos
-('Osito de Peluche Marrón 30cm', 1, 1, 4500.00, 35),
-('Osito de Peluche Miel 40cm', 1, 1, 5200.00, 28),
-('Oso Vintage Beige', 1, 3, 6800.00, 15),
-('Mini Oso Llavero', 1, 5, 1200.00, 120),
+Esta base de datos fue creada como un proyecto práctico de aprendizaje para comprender el diseño del modelo relacional, el uso de SQL DDL/DML y la gestión de la información empresarial utilizando un modelo de datos estructurado.
 
--- Animales Salvajes
-('Oso Polar 50cm', 2, 2, 5500.00, 22),
-('Oso Grizzly Gigante', 2, 4, 12500.00, 8),
-('Oso Panda 35cm', 2, 2, 4800.00, 30),
-('Koala de Peluche', 2, 4, 3900.00, 25),
-('Cachorro de León', 2, 3, 4200.00, 18),
-
--- Criaturas Fantásticas
-('Unicornio Rosa 45cm', 3, 1, 6200.00, 20),
-('Unicornio Arcoíris', 3, 1, 6500.00, 15),
-('Dragón Azul', 3, 4, 7200.00, 12),
-('Pegaso Blanco', 3, 2, 6800.00, 10),
-
--- Colección Bebé
-('Osito Sonajero para Bebé', 4, 3, 2800.00, 45),
-('Set de Mantita con Oso Suave', 4, 5, 5500.00, 20),
-('Osito Musical', 4, 1, 4900.00, 18),
-
--- Temporada y Festivos
-('Oso Navideño con Bufanda', 5, 1, 5800.00, 40),
-('Oso de San Valentín con Corazón', 5, 3, 5200.00, 35),
-('Oso Conejito de Pascua', 5, 5, 4700.00, 28),
-
--- Peluches Gigantes
-('Osito Gigante 120cm', 6, 4, 18500.00, 5),
-('Panda Mega 100cm', 6, 2, 15800.00, 6);
-
--- ============================================
--- CLIENTES
--- ============================================
-INSERT INTO customers(name, email, phone, address) VALUES
-('Ana López', 'ana.lopez@gmail.com', '+54-911-2345-6789', 'Av. Cabildo 1234, CABA'),
-('Juan Pérez', 'juan.perez@gmail.com', '+54-911-3456-7890', 'Av. Corrientes 5678, CABA'),
-('María González', 'maria.gonzalez@hotmail.com', '+54-911-4567-8901', 'San Martín 890, Vicente López'),
-('Carlos Fernández', 'carlos.f@yahoo.com', '+54-911-5678-9012', 'Mitre 456, San Isidro'),
-('Lucía Rodríguez', 'luciarodriguez@gmail.com', '+54-911-6789-0123', 'Belgrano 234, Olivos'),
-('Roberto Martínez', 'rmartinez@outlook.com', '+54-911-7890-1234', 'Rivadavia 1122, CABA'),
-('Sofía Díaz', 'sofia.diaz@gmail.com', '+54-911-8901-2345', 'Santa Fe 3344, CABA'),
-('Diego Torres', 'diego.torres@gmail.com', '+54-911-9012-3456', 'Las Heras 567, CABA'),
-('Valentina Ruiz', 'vale.ruiz@gmail.com', '+54-911-0123-4567', 'Libertador 2890, CABA'),
-('Martín Sánchez', 'martin.sanchez@gmail.com', '+54-911-1234-5678', 'Callao 1567, CABA');
-
--- ============================================
--- PEDIDOS
--- ============================================
-INSERT INTO orders(customer_id, order_date, total_amount) VALUES
-(1, '2025-01-05 10:30:00', 9000.00),
-(2, '2025-01-05 14:15:00', 18500.00),
-(3, '2025-01-06 09:20:00', 12400.00),
-(4, '2025-01-06 16:45:00', 5500.00),
-(5, '2025-01-07 11:00:00', 24700.00),
-(6, '2025-01-07 13:30:00', 8400.00),
-(1, '2025-01-08 10:00:00', 15800.00),
-(7, '2025-01-08 15:20:00', 6800.00),
-(8, '2025-01-09 09:45:00', 11000.00),
-(9, '2025-01-09 14:10:00', 10400.00),
-(10, '2025-01-10 10:30:00', 7800.00);
-
--- ============================================
--- ÍTEMS DE PEDIDOS
--- ============================================
--- Pedido 1 (Ana López - 2 Ositos de Peluche)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(1, 1, 2, 4500.00);
-
--- Pedido 2 (Juan Pérez - 1 Osito Gigante)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(2, 20, 1, 18500.00);
-
--- Pedido 3 (María González - Pedido mixto)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(3, 5, 1, 5500.00),
-(3, 10, 1, 6200.00),
-(3, 14, 1, 2800.00);
-
--- Pedido 4 (Carlos Fernández - Colección Bebé)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(4, 15, 1, 5500.00);
-
--- Pedido 5 (Lucía Rodríguez - Pedido grande)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(5, 6, 1, 12500.00),
-(5, 7, 2, 4800.00),
-(5, 17, 1, 5800.00);
-
--- Pedido 6 (Roberto Martínez - Animales Salvajes)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(6, 8, 2, 3900.00),
-(6, 4, 1, 1200.00);
-
--- Pedido 7 (Ana López - Segunda compra)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(7, 21, 1, 15800.00);
-
--- Pedido 8 (Sofía Díaz - Fantasía)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(8, 3, 1, 6800.00);
-
--- Pedido 9 (Diego Torres - Mixto)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(9, 2, 1, 5200.00),
-(9, 11, 1, 6500.00);
-
--- Pedido 10 (Valentina Ruiz - Temporada)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(10, 17, 1, 5800.00),
-(10, 18, 1, 5200.00);
-
--- Pedido 11 (Martín Sánchez - Bebé + Clásico)
-INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
-(11, 16, 1, 4900.00),
-(11, 1, 1, 4500.00);
-```
-
-## 👤 Author
-
-Designed and developed by **Tomás Mársico**
-
-If you have questions, feel free to reach out or open an issue in the repository.
-
-## 🌟 Final Notes
-
-This database was created as a practical learning project to understand relational model design, SQL DDL/DML usage, and management of business information using a structured data model.
-
-Thank you for checking out this project! 😊
+Gracias por visitar este proyecto! 😊

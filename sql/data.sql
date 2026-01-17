@@ -1,6 +1,7 @@
 -- ============================================
 -- PROVEEDORES
 -- ============================================
+
 INSERT INTO suppliers(name, phone, email) VALUES
 ('Fábrica de Osos', '+54-11-4567-8901', 'ventas@fabricadeosos.com'),
 ('Peluches Internacionales', '+54-11-4567-8902', 'contacto@peluchesinternacionales.com'),
@@ -11,6 +12,7 @@ INSERT INTO suppliers(name, phone, email) VALUES
 -- ============================================
 -- CATEGORÍAS
 -- ============================================
+
 INSERT INTO categories(name) VALUES
 ('Osos Clásicos'),
 ('Animales Salvajes'),
@@ -22,6 +24,7 @@ INSERT INTO categories(name) VALUES
 -- ============================================
 -- PRODUCTOS
 -- ============================================
+
 INSERT INTO products(name, category_id, supplier_id, price, stock) VALUES
 -- Osos Clásicos
 ('Osito de Peluche Marrón 30cm', 1, 1, 4500.00, 35),
@@ -59,6 +62,7 @@ INSERT INTO products(name, category_id, supplier_id, price, stock) VALUES
 -- ============================================
 -- CLIENTES
 -- ============================================
+
 INSERT INTO customers(name, email, phone, address) VALUES
 ('Ana López', 'ana.lopez@gmail.com', '+54-911-2345-6789', 'Av. Cabildo 1234, CABA'),
 ('Juan Pérez', 'juan.perez@gmail.com', '+54-911-3456-7890', 'Av. Corrientes 5678, CABA'),
@@ -74,6 +78,7 @@ INSERT INTO customers(name, email, phone, address) VALUES
 -- ============================================
 -- PEDIDOS
 -- ============================================
+
 INSERT INTO orders(customer_id, order_date, total_amount) VALUES
 (1, '2025-01-05 10:30:00', 9000.00),
 (2, '2025-01-05 14:15:00', 18500.00),
@@ -90,6 +95,7 @@ INSERT INTO orders(customer_id, order_date, total_amount) VALUES
 -- ============================================
 -- ÍTEMS DE PEDIDOS
 -- ============================================
+
 -- Pedido 1 (Ana López - 2 Ositos de Peluche)
 INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
 (1, 1, 2, 4500.00);
@@ -141,3 +147,95 @@ INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
 INSERT INTO order_items(order_id, product_id, quantity, unit_price) VALUES
 (11, 16, 1, 4900.00),
 (11, 1, 1, 4500.00);
+
+-- ============================================
+--  OFICINAS / SUCURSALES
+-- ============================================
+
+INSERT INTO offices (name, address, city) VALUES 
+('Casa Central - Tierra de Osos', 'Av. Santa Fe 2500', 'CABA'),
+('Sucursal Abasto', 'Av. Corrientes 3200', 'CABA'),
+('Centro de Distribución', 'Ruta 9 Km 20', 'Pacheco'),
+('Punto de Retiro Palermo', 'Honduras 4800', 'CABA');
+
+-- ============================================
+-- EMPLEADOS (Vinculados a Oficinas)
+-- ============================================
+
+INSERT INTO employees (first_name, last_name, email, role, office_id, hire_date) VALUES 
+('Julieta', 'Gómez', 'jgomez@tierradeosos.com', 'Vendedora Senior', 1, '2023-01-15'),
+('Marcos', 'Paz', 'mpaz@tierradeosos.com', 'Atención al Cliente', 2, '2023-05-10'),
+('Ricardo', 'Sánchez', 'rsanchez@tierradeosos.com', 'Gerente de Sucursal', 2, '2022-11-20'),
+('Elena', 'Russo', 'erusso@tierradeosos.com', 'Encargada de Logística', 3, '2024-02-01'),
+('Tomas', 'Ferreira', 'tferreira@tierradeosos.com', 'Vendedor', 4, '2024-03-15');
+
+-- ============================================
+-- MÉTODOS DE PAGO
+-- ============================================
+
+INSERT INTO payment_methods (name) VALUES 
+('Efectivo'),
+('Tarjeta de Crédito'),
+('Tarjeta de Débito'),
+('Transferencia Bancaria'),
+('Mercado Pago');
+
+-- ============================================
+-- MÉTODOS DE ENVÍO
+-- ============================================
+
+INSERT INTO shipping_methods (name, cost) VALUES 
+('Retiro en Sucursal', 0.00),
+('Envío Estándar a Domicilio', 1500.00),
+('Envío Express (24hs)', 3500.00),
+('Envío Gratis (Promocional)', 0.00);
+
+-- ============================================
+-- CUPONES DE DESCUENTO
+-- ============================================
+
+INSERT INTO discounts (code, percentage_off, active) VALUES 
+('BIENVENIDA10', 10.00, 1),
+('OSITO2026', 15.50, 1),
+('DIADELNIÑO', 20.00, 0), -- Inactivo
+('CYBERPELUCHE', 25.00, 1),
+('CLIENTEFRECUENTE', 5.00, 1);
+
+-- ============================================
+-- RESEÑAS DE PRODUCTOS (Basadas en productos existentes)
+-- ============================================
+
+INSERT INTO product_reviews (product_id, customer_id, rating, comment) VALUES 
+(1, 1, 5, 'El osito marrón es súper suave, a mi hijo le encantó.'),
+(3, 2, 4, 'El unicornio es hermoso, pero tardó un poco el envío.'),
+(5, 3, 5, 'Increíble el tamaño del oso gigante, vale cada centavo.'),
+(10, 5, 3, 'Lindo, pero el color es un poco más oscuro que en la foto.'),
+(15, 7, 5, 'Perfecto para recién nacidos, material muy seguro.');
+
+-- ============================================
+-- LISTA DE DESEOS (Wishlist)
+-- ============================================
+
+INSERT INTO wishlist (customer_id, product_id, added_date) VALUES 
+(1, 10, '2026-01-10'),
+(2, 5, '2026-01-12'),
+(4, 18, '2026-01-15'),
+(6, 1, '2026-01-16'),
+(10, 21, '2026-01-17');
+
+-- ============================================
+-- DEVOLUCIONES (Simulando órdenes anteriores)
+-- ============================================
+
+INSERT INTO returns (order_id, reason, status) VALUES 
+(2, 'El producto llegó con una costura abierta.', 'Approved'),
+(5, 'No era el tamaño que esperaba.', 'Pending');
+
+-- ============================================
+-- LOGS DE AUDITORÍA (Ejemplos manuales)
+-- ============================================
+
+INSERT INTO audit_logs (table_name, action_type, user_responsible) VALUES 
+('products', 'UPDATE', 'admin_marcos'),
+('customers', 'INSERT', 'system_auto'),
+('orders', 'DELETE', 'manager_ricardo');
